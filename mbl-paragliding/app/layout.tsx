@@ -5,7 +5,7 @@ import { Montserrat } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Suspense } from "react";
 import { LanguageProvider } from "@/contexts/language-context";
-import { Navigation } from "@/components/navigation"; // <-- BƯỚC 1: IMPORT HEADER
+import { Navigation } from "@/components/navigation"; 
 import { FloatingSocial } from "@/components/floating-social";
 import "./globals.css";
 
@@ -24,15 +24,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="vi" suppressHydrationWarning>
-      <body className={`font-sans ${GeistSans.variable} ${montserrat.variable}`}>
+    // Bỏ 'suppressHydrationWarning' khỏi thẻ <html>
+    <html lang="vi">
+      <body 
+        className={`font-sans ${GeistSans.variable} ${montserrat.variable}`}
+        suppressHydrationWarning // <-- THÊM VÀO ĐÂY
+      >
         <LanguageProvider>
           <Suspense fallback={null}>
-            <Navigation /> {/* <-- BƯỚC 2: ĐẶT HEADER VÀO ĐÂY */}
-            <main>{children}</main> {/* Đặt children trong <main> cho đúng ngữ nghĩa HTML */}
+            <Navigation /> 
+            <main>{children}</main> 
             <FloatingSocial />
             <Analytics />
-            {/* <Footer /> <-- Nếu có Footer, bạn sẽ đặt nó ở đây */}
+            {/* <Footer /> */}
           </Suspense>
         </LanguageProvider>
       </body>

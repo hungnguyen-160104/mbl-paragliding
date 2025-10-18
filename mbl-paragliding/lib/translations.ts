@@ -10,6 +10,9 @@ export const translations = {
       preNotice: "Chuẩn Bị Trước Khi Bay",
       contact: "Liên hệ",
       bookNow: "Đặt ngay",
+          // ➕ thêm:
+    blog: "Blog",
+    login: "Đăng nhập",
     },
     hero: {
       title: "MEBAYLUON PARAGLIDING",
