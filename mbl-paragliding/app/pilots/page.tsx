@@ -14,98 +14,98 @@ const pilotsData = [
     role: "Team Leader",
     nickname: "Đội trưởng Mỹ",
     slug: "dang-van-my",
-    avatar: "/pilots/dang-van-my/dang-van-my.png",
+    avatar: "/pilots/dang-van-my/dang-van-my.jpg",
   }, // Đã đưa lên đầu
   {
     name: "ALISH THAPA",
     role: "Team Pilot",
     nickname: "Phantom bầu trời",
     slug: "alish-thapa",
-    avatar: "/pilots/alish-thapa/alish-thapa.png",
+    avatar: "/pilots/alish-thapa/alish-thapa.jpg",
   },
   {
     name: "BISHAL THAPA",
     role: "Team Pilot",
     nickname: "Đặc nhiệm cánh gió",
     slug: "bishal-thapa",
-    avatar: "/pilots/bishal-thapa/bishal-thapa.png",
+    avatar: "/pilots/bishal-thapa/bishal-thapa.jpg",
   },
   {
     name: "SUBASH THAPA",
     role: "Team Pilot",
     nickname: "Kỵ sỹ không trung",
     slug: "subash-thapa",
-    avatar: "/pilots/subash-thapa/subash-thapa.png",
+    avatar: "/pilots/subash-thapa/subash-thapa.jpg",
   },
   {
     name: "TOÀN NGUYÊN",
     role: "Team Pilot",
     nickname: "Rambo",
     slug: "toan-nguyen",
-    avatar: "/pilots/toan-nguyen/toan-nguyen.png",
+    avatar: "/pilots/toan-nguyen/toan-nguyen.jpg",
   },
   {
     name: "MINH VÕ",
     role: "Team Pilot",
     nickname: "Đại bàng thép",
     slug: "minh-vo",
-    avatar: "/pilots/minh-vo/minh-vo.png",
+    avatar: "/pilots/minh-vo/minh-vo.jpg",
   },
   {
     name: "NGÔ ĐỘI",
     role: "Team Pilot",
     nickname: "Chiến binh lượn ách",
     slug: "ngo-doi",
-    avatar: "/pilots/ngo-doi/ngo-doi.png",
+    avatar: "/pilots/ngo-doi/ngo-doi.jpeg",
   },
   {
     name: "MINH TRUNG",
     role: "Team Pilot",
     nickname: "Chiến thần không gian",
     slug: "minh-trung",
-    avatar: "/pilots/minh-trung/minh-trung.png",
+    avatar: "/pilots/minh-trung/minh-trung.jpg",
   },
   {
     name: "TUẤN NGUYỄN",
     role: "Team Pilot",
     nickname: "Nhị ca",
     slug: "tuan-nguyen",
-    avatar: "/pilots/tuan-nguyen/tuan-nguyen.png",
+    avatar: "/pilots/tuan-nguyen/tuan-nguyen.jpg",
   },
   {
     name: "ĐỊNH THẾ ANH",
     role: "Team Pilot",
     nickname: "Thợ săn mây",
     slug: "dinh-the-anh",
-    avatar: "/pilots/dinh-the-anh/dinh-the-anh.png",
+    avatar: "/pilots/dinh-the-anh/dinh-the-anh.jpg",
   },
   {
     name: "CHIẾN THẮNG",
     role: "Team Pilot",
     nickname: "Thắng thần sét",
     slug: "chien-thang",
-    avatar: "/pilots/chien-thang/chien-thang.png",
+    avatar: "/pilots/chien-thang/chien-thang.jpg",
   },
   {
     name: "PHAN HÙNG",
     role: "Team Pilot",
     nickname: "Lãng khách bầu trời",
     slug: "phan-hung",
-    avatar: "/pilots/phan-hung/phan-hung.png",
+    avatar: "/pilots/phan-hung/phan-hung.jpg",
   },
   {
     name: "BISHAL SKYBOY",
     role: "Team Pilot",
     nickname: "skyboy",
     slug: "bishal-skyboy",
-    avatar: "/pilots/bishal-skyboy/bishal-skyboy.png",
+    avatar: "/pilots/bishal-skyboy/bishal-skyboy.jpg",
   },
   {
     name: "SUMAN THAPA",
     role: "Team Pilot",
     nickname: "Sky Rider",
     slug: "suman-thapa",
-    avatar: "/pilots/suman-thapa/suman-thapa.png",
+    avatar: "/pilots/suman-thapa/suman-thapa.jpg",
   },
 ]
 
@@ -136,20 +136,7 @@ export default function PilotsPage() {
       <div className="relative z-10"> {/* Container cho nội dung */}
         <Navigation />
 
-        {/* Hero Section */}
-        <section className="relative h-screen flex items-center justify-center">
-          <div className="relative z-10 container mx-auto px-4 text-center text-white">
-            <h1 className="text-5xl md:text-6xl font-bold mb-4 font-serif">
-              {P?.title ?? (language === "vi" ? "Đội ngũ phi công" : "Our Pilots")}
-            </h1>
-            <p className="text-xl md:text-2xl max-w-3xl mx-auto text-balance">
-              {P?.subtitle ??
-                (language === "vi"
-                  ? "Gặp gỡ những phi công chuyên nghiệp sẽ đồng hành cùng bạn trên bầu trời"
-                  : "Meet the professional pilots who will accompany you in the sky")}
-            </p>
-          </div>
-        </section>
+        
 
         {/* Intro Section */}
         <section className="py-16 relative z-10 text-white">

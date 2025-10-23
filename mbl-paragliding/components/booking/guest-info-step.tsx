@@ -1,131 +1,100 @@
-"use client"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import type { GuestInfo } from "@/types/booking"
+"use client";
+import React from "react";
+import { useBookingStore } from "@/store/booking-store";
 
-interface GuestInfoStepProps {
-  guests: GuestInfo[]
-  onGuestsChange: (guests: GuestInfo[]) => void
-  onNext: () => void
-  onBack: () => void
-}
+const genders = ["Nam", "Nữ", "Khác"] as const;
 
-export function GuestInfoStep({ guests, onGuestsChange, onNext, onBack }: GuestInfoStepProps) {
-  const handleGuestChange = (index: number, field: keyof GuestInfo, value: string) => {
-    const updatedGuests = [...guests]
-    updatedGuests[index] = { ...updatedGuests[index], [field]: value }
-    onGuestsChange(updatedGuests)
-  }
-
-  const isValid = guests.every((guest) => guest.name && guest.phone && guest.email && guest.date && guest.timeSlot)
+export default function GuestInfoStep() {
+  const data = useBookingStore((s) => s.data);
+  const setGuest = useBookingStore((s) => s.setGuest);
+  const back = useBookingStore((s) => s.back);
+  const next = useBookingStore((s) => s.next);
 
   return (
-    <div className="space-y-6">
-      {guests.map((guest, index) => (
-        <Card key={guest.id}>
-          <CardHeader>
-            <CardTitle className="text-lg">Khách {index + 1}</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor={`name-${index}`}>Họ và tên *</Label>
-                <Input
-                  id={`name-${index}`}
-                  value={guest.name}
-                  onChange={(e) => handleGuestChange(index, "name", e.target.value)}
-                  placeholder="Nguyễn Văn A"
-                  required
-                />
+    <form
+      className="space-y-6"
+      onSubmit={(e) => { e.preventDefault(); next(); }}
+    >
+      <p className="text-sm text-neutral-700">
+        Vui lòng điền đầy đủ & chính xác thông tin cho từng hành khách.
+      </p>
+
+      <div className="space-y-5">
+        {Array.from({ length: data.guestsCount }).map((_, idx) => {
+          const g = data.guests[idx] || {};
+          return (
+            <fieldset key={idx} className="rounded-2xl border p-4">
+              <legend className="font-semibold">Khách {idx + 1}</legend>
+              <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700">Họ và tên (passport)</label>
+                  <input
+                    type="text"
+                    value={g.fullName || ""}
+                    onChange={(e) => setGuest(idx, { fullName: e.target.value })}
+                    className="mt-2 w-full rounded-lg border px-3 py-2"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700">Ngày sinh</label>
+                  <input
+                    type="date"
+                    value={g.dob || ""}
+                    onChange={(e) => setGuest(idx, { dob: e.target.value })}
+                    className="mt-2 w-full rounded-lg border px-3 py-2"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700">Giới tính</label>
+                  <select
+                    className="mt-2 w-full rounded-lg border px-3 py-2"
+                    value={(g.gender as any) || "Nam"}
+                    onChange={(e) => setGuest(idx, { gender: e.target.value as any })}
+                  >
+                    {genders.map((x) => <option key={x} value={x}>{x}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700">Số CCCD/Passport</label>
+                  <input
+                    type="text"
+                    value={g.idNumber || ""}
+                    onChange={(e) => setGuest(idx, { idNumber: e.target.value })}
+                    className="mt-2 w-full rounded-lg border px-3 py-2"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700">Cân nặng (kg)</label>
+                  <input
+                    type="number"
+                    min={20}
+                    max={130}
+                    value={g.weightKg ?? ""}
+                    onChange={(e) => setGuest(idx, { weightKg: parseFloat(e.target.value) })}
+                    className="mt-2 w-full rounded-lg border px-3 py-2"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700">Quốc tịch</label>
+                  <input
+                    type="text"
+                    value={g.nationality || ""}
+                    onChange={(e) => setGuest(idx, { nationality: e.target.value })}
+                    className="mt-2 w-full rounded-lg border px-3 py-2"
+                  />
+                </div>
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor={`phone-${index}`}>Số điện thoại *</Label>
-                <Input
-                  id={`phone-${index}`}
-                  type="tel"
-                  value={guest.phone}
-                  onChange={(e) => handleGuestChange(index, "phone", e.target.value)}
-                  placeholder="+84 123 456 789"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor={`email-${index}`}>Email *</Label>
-                <Input
-                  id={`email-${index}`}
-                  type="email"
-                  value={guest.email}
-                  onChange={(e) => handleGuestChange(index, "email", e.target.value)}
-                  placeholder="email@example.com"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor={`date-${index}`}>Ngày bay *</Label>
-                <Input
-                  id={`date-${index}`}
-                  type="date"
-                  value={guest.date}
-                  onChange={(e) => handleGuestChange(index, "date", e.target.value)}
-                  min={new Date().toISOString().split("T")[0]}
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor={`timeSlot-${index}`}>Khung giờ *</Label>
-                <Select value={guest.timeSlot} onValueChange={(value) => handleGuestChange(index, "timeSlot", value)}>
-                  <SelectTrigger id={`timeSlot-${index}`}>
-                    <SelectValue placeholder="Chọn khung giờ" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="morning">Sáng (7:00 - 10:00)</SelectItem>
-                    <SelectItem value="afternoon">Chiều (15:00 - 17:00)</SelectItem>
-                    <SelectItem value="evening">Tối (17:00 - 19:00)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor={`pickup-${index}`}>Điểm đón (tùy chọn)</Label>
-                <Input
-                  id={`pickup-${index}`}
-                  value={guest.pickup || ""}
-                  onChange={(e) => handleGuestChange(index, "pickup", e.target.value)}
-                  placeholder="Địa chỉ khách sạn"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor={`note-${index}`}>Ghi chú (tùy chọn)</Label>
-              <Textarea
-                id={`note-${index}`}
-                value={guest.note || ""}
-                onChange={(e) => handleGuestChange(index, "note", e.target.value)}
-                placeholder="Yêu cầu đặc biệt, tình trạng sức khỏe..."
-                rows={3}
-              />
-            </div>
-          </CardContent>
-        </Card>
-      ))}
-
-      <div className="flex gap-4">
-        <Button onClick={onBack} variant="outline" size="lg" className="flex-1 bg-transparent">
-          Quay lại
-        </Button>
-        <Button onClick={onNext} size="lg" className="flex-1" disabled={!isValid}>
-          Tiếp tục
-        </Button>
+            </fieldset>
+          );
+        })}
       </div>
-    </div>
-  )
+
+      <div className="flex justify-between">
+        <button type="button" onClick={back} className="px-4 py-2 rounded-xl border">Quay lại</button>
+        <button type="submit" className="px-5 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700">Tiếp tục</button>
+      </div>
+    </form>
+  );
 }

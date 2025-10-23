@@ -5,8 +5,8 @@ export const translations = {
       home: "Trang chủ",
       about: "Về chúng tôi",
       pilots: "Phi công",
-      homestay: "Homestay & Café",
-      booking: "Đặt vé",
+      homestay: "Homestay & Cà phê",
+      booking: "Đặt bay",
       preNotice: "Chuẩn Bị Trước Khi Bay",
       contact: "Liên hệ",
       bookNow: "Đặt ngay",
@@ -22,7 +22,7 @@ export const translations = {
       learnMore: "Tìm hiểu thêm",
     },
     spots: {
-      title: "Điểm Bay Nổi Bật",
+      title: "ĐIỂM BAY NỔI BẬT",
       subtitle: "Khám phá vẻ đẹp Việt Nam từ trên cao với những điểm bay tuyệt vời nhất",
       viewDetails: "Xem Chi Tiết",
       locations: {
@@ -138,14 +138,14 @@ export const translations = {
         special: {
           title: "Lưu ý đặc biệt",
           items: [
-            "Mỗi chuyến bay: khách bay cùng một phi công chuyên nghiệp, do phi công cầm lái",
+            "Mỗi chuyến bay: một khách bay cùng một phi công chuyên nghiệp, chuyến bay hoàn toàn do phi công cầm lái, chỉ cần ngồi thư giãn, ngắm cảnh và tạo dáng thật đẹp để lưu lại những bức ảnh và video ấn tượng nhất giữa không trung.",
             "Trẻ em trên 3 tuổi đều tính là 1 khách bay riêng với phi công (không bay cùng bố/mẹ hoặc người thân do chỉ có duy nhất 1 ghế ngồi)",
           ],
         },
       },
     },
     contact: {
-      title: "Liên hệ với chúng tôi",
+      title: "LIÊN HỆ VỚI CHÚNG TÔI",
       subtitle: "Chúng tôi luôn sẵn sàng hỗ trợ và giải đáp mọi thắc mắc của bạn",
       connectTitle: "Kết nối với chúng tôi",
       connectSubtitle: "Chọn kênh liên hệ phù hợp với bạn. Chúng tôi sẵn sàng hỗ trợ 24/7",
@@ -183,18 +183,18 @@ export const translations = {
     },
     homestay: {
       badge: "CLUB HOUSE MEBAYLUON",
-      title: "Homestay & Café - Bãi Hạ Cánh Dù Lượn",
+      title: "Homestay & Cà phê - Bãi Hạ Cánh Dù Lượn",
       slogan: "Bay giữa trời - nghỉ giữa mây - chill giữa ruộng bậc thang",
       callNow: "Gọi đặt phòng",
       viewLocation: "Xem vị trí",
       intro: {
-        title: "Chào mừng đến với Club House Mebayluon",
+        title: "Chào Mừng Đến Với Club House Mebayluon",
         description:
-          "Tọa lạc tại Bản Lim Mông - Xã Cao Phạ - Huyện Mù Cang Chải - Tỉnh Yên Bái. Cách Trung tâm Hà Nội 250km với 5 tiếng đi xe, khu vực homestay nằm ngay chân đèo Khau Phạ rất thích hợp cho 1 chuyến đi chuyên đôi cần nghỉ ngơi để tiếp tục hành trình leo đèo Khau Phạ hơn 40km nữa mới có thể khám phá Mù Cang Chải. Homestay nằm ngay bãi hạ cánh dù lượn, bạn còn có thể bắt gặp những cánh dù đẹp mắt lướt trên bầu trời tại đây.",
+          "Nằm tại Bản Lìm Mông – Xã Cao Phạ – Huyện Mù Cang Chải – Tỉnh Yên Bái, cách Hà Nội khoảng 250 km (tầm 5 tiếng đi xe), khu homestay xinh xắn của chúng tôi nằm ngay chân đèo Khau Phạ – một trong “tứ đại đỉnh đèo” nổi tiếng của Việt Nam. Đây là điểm dừng chân lý tưởng cho những ai muốn nghỉ ngơi trước khi chinh phục hành trình hơn 40 km leo đèo Khau Phạ để khám phá trọn vẹn Mù Cang Chải hùng vĩ. Đặc biệt, homestay tọa lạc ngay bãi hạ cánh dù lượn, nên chỉ cần nhâm nhi tách cà phê là bạn đã có thể ngắm nhìn những cánh dù rực rỡ lướt trên bầu trời.",
         location: "Vị trí đắc địa",
         traditional: "Nhà sàn truyền thống",
         traditionalDesc: "Vật liệu gỗ tự nhiên, thân thiện môi trường",
-        cafe: "Café & Restaurant",
+        cafe: "Cà phê & Nhà hàng",
         cafeDesc: "View suối và ruộng bậc thang tuyệt đẹp",
       },
       rooms: {
@@ -251,8 +251,8 @@ export const translations = {
         "large-group": "Nhóm lớn",
       },
       cafe: {
-        title: "Café & Ẩm thực",
-        subtitle: "Không gian Café - Restaurant ngay tầng trệt, view suối và ruộng bậc thang",
+        title: "Cà phê & Ẩm thực",
+        subtitle: "Không gian Cà phê - Nhà hàng ngay tầng trệt, view suối và ruộng bậc thang",
         categories: {
           drinks: "Đồ uống",
           alcohol: "Rượu đặc sản",
@@ -264,7 +264,7 @@ export const translations = {
       },
       amenities: {
         title: "Tiện ích & Dịch vụ",
-        subtitle: "Đầy đủ tiện nghi cho chuyến nghỉ dưỡng hoàn hảo",
+        subtitle: "Không gian Cà phê – Nhà hàng sở hữu tầm nhìn mở hướng ra bãi hạ dù lượn, ruộng bậc thang, bản làng dân tộc và dòng suối trong lành",
         list: {
           "free-handmade-tea": "Trà handmade miễn phí",
           "free-parking": "Đỗ xe miễn phí",
@@ -302,7 +302,7 @@ export const translations = {
       home: "Home",
       about: "About Us",
       pilots: "Pilots",
-      homestay: "Homestay & Café",
+      homestay: "Homestay & Coffee",
       booking: "Book Tour",
       preNotice: "Pre-Flight Preparation",
       contact: "Contact",
@@ -477,7 +477,7 @@ export const translations = {
     },
     homestay: {
       badge: "CLUB HOUSE MEBAYLUON",
-      title: "Homestay & Café - Paragliding Landing Site",
+      title: "Homestay & Coffe - Paragliding Landing Site",
       slogan: "Fly in the sky - rest in the clouds - chill among terraced fields",
       callNow: "Call to book",
       viewLocation: "View location",
@@ -488,7 +488,7 @@ export const translations = {
         location: "Prime Location",
         traditional: "Traditional Stilt House",
         traditionalDesc: "Natural wood materials, eco-friendly",
-        cafe: "Café & Restaurant",
+        cafe: "Coffee & Restaurant",
         cafeDesc: "Beautiful view of stream and terraced fields",
       },
       rooms: {
@@ -545,8 +545,8 @@ export const translations = {
         "large-group": "Large group",
       },
       cafe: {
-        title: "Café & Cuisine",
-        subtitle: "Café - Restaurant space on ground floor, stream and terraced field view",
+        title: "Coffe & Cuisine",
+        subtitle: "Coffee - Restaurant space on ground floor, stream and terraced field view",
         categories: {
           drinks: "Beverages",
           alcohol: "Specialty Alcohol",

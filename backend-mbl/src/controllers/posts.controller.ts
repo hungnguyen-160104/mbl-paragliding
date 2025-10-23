@@ -4,6 +4,7 @@ import { createPost } from "../services/post.service";
 import { estimateReadTime } from "../utils/readTime";
 import { toSlug } from "../utils/slug";
 
+// 📄 Lấy danh sách bài viết
 export async function listPosts(req: Request, res: Response) {
   const page = Math.max(1, Number(req.query.page || 1));
   const limit = Math.min(50, Math.max(1, Number(req.query.limit || 10)));
@@ -26,26 +27,31 @@ export async function listPosts(req: Request, res: Response) {
   res.json({ page, limit, total, items });
 }
 
+// 📄 Lấy bài viết theo ID
 export async function getPostById(req: Request, res: Response) {
   const doc = await Post.findById(req.params.id);
   if (!doc) return res.status(404).json({ message: "Not found" });
   res.json(doc);
 }
 
+// 📄 Lấy bài viết theo slug
 export async function getPostBySlug(req: Request, res: Response) {
   const doc = await Post.findOne({ slug: req.params.slug });
   if (!doc) return res.status(404).json({ message: "Not found" });
   res.json(doc);
 }
 
+// 🆕 Tạo bài viết mới
 export async function createPostCtrl(req: Request, res: Response) {
   const { title, content } = req.body || {};
-  if (!title || !content) return res.status(400).json({ message: "Missing title or content" });
+  if (!title || !content)
+    return res.status(400).json({ message: "Missing title or content" });
 
   const doc = await createPost(req.body);
   res.status(201).json(doc);
 }
 
+// ✏️ Cập nhật bài viết
 export async function updatePost(req: Request, res: Response) {
   const data: any = { ...req.body };
   if (typeof data.title === "string" && !data.slug) {
@@ -60,12 +66,14 @@ export async function updatePost(req: Request, res: Response) {
   res.json(doc);
 }
 
+// 🗑️ Xóa bài viết
 export async function deletePost(req: Request, res: Response) {
   const doc = await Post.findByIdAndDelete(req.params.id);
   if (!doc) return res.status(404).json({ message: "Not found" });
   res.json({ message: "Deleted", id: doc.id });
 }
 
+// ✅ Xuất bản / hủy xuất bản
 export async function publishPost(req: Request, res: Response) {
   const { isPublished } = req.body || {};
   const doc = await Post.findByIdAndUpdate(
@@ -77,12 +85,14 @@ export async function publishPost(req: Request, res: Response) {
   res.json(doc);
 }
 
+// 👁️‍🗨️ Tăng lượt xem thật (theo slug)
 export async function addView(req: Request, res: Response) {
-  const doc = await Post.findByIdAndUpdate(
-    req.params.id,
+  const { slug } = req.params;
+  const doc = await Post.findOneAndUpdate(
+    { slug },
     { $inc: { views: 1 } },
     { new: true }
   );
   if (!doc) return res.status(404).json({ message: "Not found" });
-  res.json({ id: doc.id, views: doc.views });
+  res.json({ slug: doc.slug, views: doc.views });
 }

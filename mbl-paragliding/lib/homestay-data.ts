@@ -22,7 +22,7 @@ export const roomTypes: RoomType[] = [
       adults: 1,
       children: 1,
     },
-    image: "/homestay/single-room.jpeg",
+    image: "/homestay/phong-don.jpg",
     features: ["breakfast", "wifi", "view", "handmade-tea"],
     description: "Có 2 phòng, tối đa 1 người lớn và 1 trẻ em dưới 5 tuổi, gồm 1 đệm đơn",
   },
@@ -35,7 +35,7 @@ export const roomTypes: RoomType[] = [
       adults: 2,
       children: 2,
     },
-    image: "/homestay/couple-attic.jpeg",
+    image: "/homestay/ap-mai.jpg",
     features: ["breakfast", "wifi", "attic-view", "handmade-tea"],
     description: "1 phòng áp mái lớn duy nhất, tối đa 2 người lớn và 2 trẻ em dưới 5 tuổi",
   },
@@ -48,7 +48,7 @@ export const roomTypes: RoomType[] = [
       adults: 4,
       children: 2,
     },
-    image: "/homestay/double-room.jpeg",
+    image: "/homestay/phong-doi.jpg",
     features: ["breakfast", "wifi", "mountain-view", "family-friendly"],
     description: "2 Phòng lớn, tối đa 1 gia đình nhỏ (2 người lớn và 2 trẻ em dưới 5 tuổi) 1 đệm đôi lớn, view suối",
   },
@@ -60,7 +60,7 @@ export const roomTypes: RoomType[] = [
     capacity: {
       adults: 20,
     },
-    image: "/homestay/dormitory.jpeg",
+    image: "/homestay/phong-cong-dong.jpg",
     features: ["breakfast", "wifi", "shared-space", "budget-friendly"],
     description: "1 phòng lớn - ở tối đa 20 đệm đơn/sàn",
   },
@@ -72,7 +72,7 @@ export const roomTypes: RoomType[] = [
     capacity: {
       adults: 25,
     },
-    image: "/homestay/whole-home.png",
+    image: "/homestay/nguyen-san.png",
     features: ["exclusive-use", "all-facilities", "group-friendly", "breakfast"],
     description:
       "Khách được sử dụng toàn bộ phần sàn công đồng, bao gồm các phòng áp mái. Ở tối đa 25 khách/sàn. Miễn phí trẻ em dưới 5 tuổi.",
@@ -85,7 +85,7 @@ export const roomTypes: RoomType[] = [
     capacity: {
       adults: 35,
     },
-    image: "/homestay/whole-home.png",
+    image: "/homestay/nguyen-can.jpg",
     features: ["exclusive-use", "all-facilities", "large-group", "breakfast"],
     description:
       "Khách được sử dụng toàn bộ phần sàn công đồng, phòng đôi, đơn, các phòng áp mái. Ở tối đa 35 khách. Miễn phí trẻ em dưới 5 tuổi.",

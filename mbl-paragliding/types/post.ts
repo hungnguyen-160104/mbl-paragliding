@@ -11,6 +11,7 @@ export type Post = {
   views: number;
   createdAt: string;
   updatedAt: string;
+  category?: string;
 };
 
 export type Paginated<T> = {
@@ -27,4 +28,5 @@ export type PostPayload = {
   tags?: string[];
   language?: string;
   isPublished?: boolean;
+  category?: string;
 };

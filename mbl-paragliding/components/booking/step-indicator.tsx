@@ -1,34 +1,40 @@
-interface StepIndicatorProps {
-  currentStep: number
-  totalSteps: number
-}
+"use client";
+import React from "react";
+import { useBookingStore } from "@/store/booking-store";
 
-const steps = ["Số khách", "Thông tin", "Dịch vụ thêm", "Mã giảm giá", "Xem lại", "Liên hệ"]
+const STEPS = [
+  { id: 1, label: "Chọn dịch vụ" },
+  { id: 2, label: "Ngày & liên hệ" },
+  { id: 3, label: "Khách bay" },
+  { id: 4, label: "Xác nhận" },
+  { id: 5, label: "Hoàn tất" },
+];
 
-export function StepIndicator({ currentStep, totalSteps }: StepIndicatorProps) {
+export default function StepIndicator() {
+  const step = useBookingStore((s) => s.step);
+
   return (
-    <div className="mb-8">
-      <div className="flex items-center justify-between mb-4">
-        {steps.slice(0, totalSteps).map((step, index) => (
-          <div key={index} className="flex items-center flex-1">
-            <div className="flex flex-col items-center flex-1">
+    <ol className="flex items-center justify-between gap-2">
+      {STEPS.map((s, idx) => {
+        const active = step === s.id;
+        const done = step > s.id;
+        return (
+          <li key={s.id} className="flex-1">
+            <div className="flex items-center">
               <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-colors ${
-                  index + 1 <= currentStep ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
-                }`}
+                className={`flex size-9 items-center justify-center rounded-full border text-sm font-semibold
+                ${done ? "bg-green-500 text-white border-green-500" : active ? "bg-blue-600 text-white border-blue-600" : "bg-white border-neutral-300 text-neutral-600"}`}
               >
-                {index + 1}
+                {done ? "✓" : s.id}
               </div>
-              <div className="text-xs mt-2 text-center hidden sm:block">{step}</div>
+              <div className="ml-3 text-sm font-medium text-neutral-700">{s.label}</div>
+              {idx < STEPS.length - 1 && (
+                <div className={`mx-3 h-px flex-1 ${step > s.id ? "bg-green-400" : "bg-neutral-200"}`}></div>
+              )}
             </div>
-            {index < totalSteps - 1 && (
-              <div
-                className={`h-1 flex-1 mx-2 transition-colors ${index + 1 < currentStep ? "bg-primary" : "bg-muted"}`}
-              />
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  )
+          </li>
+        );
+      })}
+    </ol>
+  );
 }

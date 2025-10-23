@@ -1,5 +1,12 @@
+import bcrypt from "bcrypt";
 import { ENV } from "../config/env";
 
-export function validateAdmin(username: string, password: string) {
-  return username === ENV.ADMIN_USERNAME && password === ENV.ADMIN_PASSWORD;
+export async function validateAdmin(username: string, password: string) {
+  if (username !== ENV.SINGLE_USER) return false;
+
+  try {
+    return await bcrypt.compare(password, ENV.SINGLE_PASSWORD_HASH);
+  } catch {
+    return false;
+  }
 }
