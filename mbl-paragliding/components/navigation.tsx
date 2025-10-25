@@ -89,6 +89,7 @@ export function Navigation() {
     { type: "path", href: "/pilots", label: t?.nav?.pilots ?? "Phi công" },
     { type: "path", href: "/homestay", label: t?.nav?.homestay ?? "Homestay" },
     { type: "path", href: "/booking", label: t?.nav?.booking ?? "Đặt vé" },
+    { type: "path", href: "/store", label: "Cửa hàng" },
     { type: "path", href: "/blog", label: "Tin tức" },
     { type: "path", href: "/knowledge", label: "Kiến thức dù lượn - Học bay" },
   ];

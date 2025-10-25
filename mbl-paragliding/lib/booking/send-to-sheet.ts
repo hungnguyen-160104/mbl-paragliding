@@ -1,22 +1,29 @@
-// Gửi dữ liệu booking sang Google Sheet (qua Apps Script endpoint)
-// Yêu cầu biến môi trường: NEXT_PUBLIC_GSHEET_ENDPOINT
-export async function postBookingToSheet(payload: any): Promise<{ ok: boolean; message?: string }> {
+// lib/booking/send-to-sheet.ts
+export async function postBookingToSheet(
+  payload: any
+): Promise<{ ok: boolean; message?: string }> {
   try {
-    const endpoint = process.env.NEXT_PUBLIC_GSHEET_ENDPOINT;
-    if (!endpoint) {
-      console.warn("Chưa cấu hình biến NEXT_PUBLIC_GSHEET_ENDPOINT");
-      return { ok: false, message: "Thiếu endpoint Google Sheet" };
-    }
-    const res = await fetch(endpoint, {
+    // Gọi API nội bộ để tránh CORS
+    const res = await fetch("/api/gsheet", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
+
+    const text = await res.text().catch(() => null);
+
     if (!res.ok) {
-      const text = await res.text();
-      return { ok: false, message: text || `HTTP ${res.status}` };
+      let msg = text;
+      try { msg = JSON.parse(text || "{}")?.message ?? msg; } catch {}
+      return { ok: false, message: msg || `HTTP ${res.status}` };
     }
-    return { ok: true };
+
+    try {
+      const json = JSON.parse(text || "{}");
+      return { ok: json.ok ?? true, message: json.message };
+    } catch {
+      return { ok: true, message: text || undefined };
+    }
   } catch (e: any) {
     return { ok: false, message: e?.message || "Lỗi không xác định" };
   }

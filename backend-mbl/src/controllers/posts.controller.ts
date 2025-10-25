@@ -10,11 +10,13 @@ export async function listPosts(req: Request, res: Response) {
   const limit = Math.min(50, Math.max(1, Number(req.query.limit || 10)));
   const skip = (page - 1) * limit;
 
-  const { search, tag, category, lang, status } = req.query as any;
+  const { search, tag, category, lang, status,type, storeCategory } = req.query as any;
   const q: any = {};
   if (search) q.title = { $regex: search, $options: "i" };
   if (tag) q.tags = { $in: [tag] };
   if (category) q.category = category;
+  if (type) q.type = type;
+  if (storeCategory) q.storeCategory = storeCategory;
   if (lang) q.language = lang;
   if (status === "draft") q.isPublished = false;
   if (status === "published") q.isPublished = true;

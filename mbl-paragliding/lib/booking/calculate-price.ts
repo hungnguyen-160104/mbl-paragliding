@@ -174,7 +174,7 @@ export interface BookingComputation {
 
 export function computePrice(input: BookingComputationInput): BookingComputation {
   const cfg = LOCATIONS[input.location];
-  const guests = Math.max(1, Math.min(10, input.guestsCount || 1));
+  const guests = Math.max(1, input.guestsCount || 1);
   const base = cfg.basePriceVND(input.dateISO);
   // discount: lấy ngưỡng cao nhất đạt được
   const tier = cfg.discountTiers.find((t) => guests >= t.minPersons) ?? { offPerPersonVND: 0, minPersons: 0 };
