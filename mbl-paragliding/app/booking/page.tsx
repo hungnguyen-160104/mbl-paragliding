@@ -47,14 +47,11 @@ export default function BookingPage() {
 
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6">
           
-          {/* === QUAN TRỌNG: SỬ DỤNG CODE NÀY === */}
-          {/* Chỉ bọc nền trắng cho bước 5 */}
+          {/* === THAY ĐỔI TẠI ĐÂY === */}
+          {/* Xóa logic cho bước 5, giờ đây tất cả các bước (1-5)
+              sẽ không có wrapper và tự quản lý style */}
           <div
-            className={
-              step === 5
-                ? "rounded-2xl bg-white shadow p-5 text-neutral-900" // Bước 5: Nền trắng
-                : "" // Các bước 1, 2, 3, 4: Không bọc
-            }
+            className={""} 
           >
           {/* === KẾT THÚC THAY ĐỔI === */}
 

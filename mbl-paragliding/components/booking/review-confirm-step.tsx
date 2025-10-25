@@ -1,21 +1,22 @@
 "use client";
+
 import React, { useState } from "react";
 import { useBookingStore } from "@/store/booking-store";
 import { computePrice, LOCATIONS } from "@/lib/booking/calculate-price";
-import { postBookingToSheet } from "@/lib/booking/send-to-sheet";
-import { notifyAdminByEmail } from "@/lib/booking/send-email";
+import api from "@/lib/api"; // ✅ Đã có sẵn
 
 export default function ReviewConfirmStep() {
   const data = useBookingStore((s) => s.data);
   const update = useBookingStore((s) => s.update);
   const back = useBookingStore((s) => s.back);
   const next = useBookingStore((s) => s.next);
+
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | undefined>();
+  const [error, setError] = useState<string | undefined>(undefined);
 
   const cfg = LOCATIONS[data.location];
   const bill = computePrice({
-    location: data.location,
+    location: data.location?.toLowerCase().replace(/[-\s]+/g, "_") as any,
     guestsCount: data.guestsCount,
     dateISO: data.dateISO,
     addons: data.addons,
@@ -26,6 +27,7 @@ export default function ReviewConfirmStep() {
     setError(undefined);
 
     try {
+      // Tạo payload gửi sang API Telegram
       const payload = {
         ...data,
         locationName: cfg.name,
@@ -33,24 +35,20 @@ export default function ReviewConfirmStep() {
         createdAt: new Date().toISOString(),
       };
 
-      console.log("📤 Gửi payload tới Google Sheet:", payload);
+      // ✅ Gọi API mới: /api/notify-telegram
+      await api<{ ok: boolean }>("/api/notify-telegram", {
+        method: "POST",
+        body: JSON.stringify({ payload }),
+      });
 
-      const toSheet = await postBookingToSheet(payload);
-      const toEmail = await notifyAdminByEmail(payload);
-
-      if (!toSheet.ok || !toEmail.ok) {
-        setError(
-          toSheet.message ||
-            toEmail.message ||
-            "Không thể gửi thông tin. Vui lòng thử lại."
-        );
-        return;
-      }
-
-      next();
+      console.log("📦 Payload xác nhận đặt bay (đã gửi Telegram):", payload);
+      next(); // sang bước “Hoàn tất”
     } catch (e: any) {
-      console.error("❌ Lỗi khi gửi booking:", e);
-      setError(e?.message || "Có lỗi xảy ra khi gửi dữ liệu.");
+      console.error("❌ Lỗi khi gửi Telegram:", e);
+      setError(
+        e?.message ||
+          "Không gửi được thông báo Telegram. Vui lòng thử lại."
+      );
     } finally {
       setSubmitting(false);
     }
@@ -186,7 +184,7 @@ export default function ReviewConfirmStep() {
           onClick={handleConfirm}
           className="px-5 py-2 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 disabled:opacity-50 transition"
         >
-          {submitting ? "Đang gửi..." : "Xác nhận"}
+          {submitting ? "Đang xử lý..." : "Xác nhận"}
         </button>
       </div>
     </div>
