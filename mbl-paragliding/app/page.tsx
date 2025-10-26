@@ -141,7 +141,7 @@ export default function HomePage() {
       },
     },
     posters: {
-      title: "ĐIỀU KIỆN QUY ĐỊNH  ĐỐI VỚI HÀNH KHÁCH",
+      title: t?.preNotice?.posters?.title ?? "ĐIỀU KIỆN QUY ĐỊNH ĐỐI VỚI HÀNH KHÁCH",
       subtitle:
         "",
     },
@@ -209,10 +209,6 @@ export default function HomePage() {
           >
             {t?.hero?.title ?? "MEBAYLUON PARAGLIDING"}
           </h1>
-
-          <p className="text-[clamp(1.1rem,3.8vw,1.7rem)] mb-3 font-light">
-            {t?.hero?.subtitle ?? "Fly Above Vietnam"}
-          </p>
 
           <p className="text-[clamp(0.95rem,3.2vw,1.25rem)] mb-8 max-w-3xl mx-auto opacity-90">
             {t?.hero?.description ??
@@ -307,7 +303,7 @@ export default function HomePage() {
                   history.replaceState(null, "", "#spots");
                 }}
               >
-                Xem Chi Tiết
+                {t?.spots?.viewDetails ?? "Xem Chi Tiết"}
               </a>
             </Button>
 
@@ -317,7 +313,7 @@ export default function HomePage() {
               variant="outline"
               className="h-11 px-6 border-white/60 text-white bg-white/10 hover:bg-white/20"
             >
-              <Link href="/pilots">Phi công</Link>
+              <Link href="/pilots">{t?.nav?.pilots ?? "Phi công"}</Link>
             </Button>
           </div>
         </div>

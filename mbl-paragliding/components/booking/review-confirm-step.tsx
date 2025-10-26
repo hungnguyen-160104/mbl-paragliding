@@ -2,10 +2,15 @@
 
 import React, { useState } from "react";
 import { useBookingStore } from "@/store/booking-store";
-import { computePrice, LOCATIONS } from "@/lib/booking/calculate-price";
-import api from "@/lib/api"; // ✅ Đã có sẵn
+import { computePriceByLang, LOCATIONS } from "@/lib/booking/calculate-price";
+import { useBookingText, useLangCode, BIGC_THANG_LONG_MAP } from "@/lib/booking/translations-booking";
+import { createBooking } from "@/lib/booking/api";
+import { notifyTelegram } from "@/lib/booking/chatbot-api";
 
 export default function ReviewConfirmStep() {
+  const t = useBookingText();
+  const lang = useLangCode();
+
   const data = useBookingStore((s) => s.data);
   const update = useBookingStore((s) => s.update);
   const back = useBookingStore((s) => s.back);
@@ -15,54 +20,53 @@ export default function ReviewConfirmStep() {
   const [error, setError] = useState<string | undefined>(undefined);
 
   const cfg = LOCATIONS[data.location];
-  const bill = computePrice({
-    location: data.location?.toLowerCase().replace(/[-\s]+/g, "_") as any,
-    guestsCount: data.guestsCount,
-    dateISO: data.dateISO,
-    addons: data.addons,
-  });
+  const billInLang = computePriceByLang(
+    { location: data.location, guestsCount: data.guestsCount, dateISO: data.dateISO, addons: data.addons },
+    lang
+  );
 
   const handleConfirm = async () => {
     setSubmitting(true);
     setError(undefined);
 
     try {
-      // Tạo payload gửi sang API Telegram
       const payload = {
         ...data,
-        locationName: cfg.name,
-        price: bill,
+        location: data.location, // key
+        locationName: cfg.name[lang] ?? cfg.name.vi,
+        price: {
+          currency: billInLang.currency,
+          perPerson: billInLang.totalPerPerson,
+          total: billInLang.totalAfterDiscount,
+        },
         createdAt: new Date().toISOString(),
       };
 
-      // ✅ Gọi API mới: /api/notify-telegram
-      await api<{ ok: boolean }>("/api/notify-telegram", {
-        method: "POST",
-        body: JSON.stringify({ payload }),
-      });
+      // 1) Tạo booking (validate location phía backend)
+      const createResp = await createBooking(payload);
+      if (!createResp?.ok) throw new Error("Tạo booking thất bại");
 
-      console.log("📦 Payload xác nhận đặt bay (đã gửi Telegram):", payload);
-      next(); // sang bước “Hoàn tất”
+      // 2) Gửi thông báo Telegram
+      await notifyTelegram(createResp.booking || payload);
+
+      next();
     } catch (e: any) {
-      console.error("❌ Lỗi khi gửi Telegram:", e);
-      setError(
-        e?.message ||
-          "Không gửi được thông báo Telegram. Vui lòng thử lại."
-      );
+      console.error("❌ Lỗi khi xác nhận:", e);
+      setError(e?.message || "Không gửi được thông báo. Vui lòng thử lại.");
     } finally {
       setSubmitting(false);
     }
   };
 
-  // === Style ===
   const glassWrapperClass =
     "bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-5 space-y-6";
   const innerBlockClass =
     "rounded-2xl border border-white/40 p-4 text-sm text-white/90";
 
+  const isHaNoi = data.location === "ha_noi";
+
   return (
     <div className="space-y-6 text-white">
-      {/* === Thông tin đặt bay === */}
       <div className={glassWrapperClass}>
         <h3 className="text-lg font-semibold text-white">
           Vui lòng kiểm tra lại thông tin đặt bay
@@ -71,77 +75,79 @@ export default function ReviewConfirmStep() {
         <div className={innerBlockClass}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <span className="font-medium">Ngày bay: </span>
+              <span className="font-medium">{t.labels.date}: </span>
               {data.dateISO}
             </div>
             <div>
-              <span className="font-medium">Khung giờ: </span>
+              <span className="font-medium">{t.labels.timeSlot}: </span>
               {data.timeSlot}
             </div>
             <div>
-              <span className="font-medium">Điểm bay: </span>
-              {cfg.name}
+              <span className="font-medium">{t.labels.location}: </span>
+              {cfg.name[lang] ?? cfg.name.vi}
             </div>
             <div>
-              <span className="font-medium">Số khách: </span>
+              <span className="font-medium">{t.labels.numGuests}: </span>
               {data.guestsCount}
             </div>
           </div>
         </div>
 
-        {/* === Thông tin liên hệ === */}
         <div className={innerBlockClass}>
-          <h4 className="font-semibold text-white">Thông tin liên hệ</h4>
+          <h4 className="font-semibold text-white">{t.labels.contactInfo}</h4>
           <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <span className="font-medium">SĐT: </span>
+              <span className="font-medium">{t.labels.phone}: </span>
               {data.contact?.phone}
             </div>
             <div>
-              <span className="font-medium">Email: </span>
+              <span className="font-medium">{t.labels.email}: </span>
               {data.contact?.email}
             </div>
-            {data.addons.pickup && data.contact?.pickupLocation && (
+            {data.addons.pickup && isHaNoi && (
               <div className="md:col-span-2">
-                <span className="font-medium">Điểm đón: </span>
+                <span className="font-medium">{t.labels.pickup}: </span>
+                {t.labels.pickupFixed}{" "}
+                <a className="text-blue-400 underline" href={BIGC_THANG_LONG_MAP} target="_blank" rel="noreferrer">
+                  {t.buttons.viewMap}
+                </a>
+              </div>
+            )}
+            {data.addons.pickup && !isHaNoi && data.contact?.pickupLocation && (
+              <div className="md:col-span-2">
+                <span className="font-medium">{t.labels.pickup}: </span>
                 {data.contact?.pickupLocation}
               </div>
             )}
             {data.contact?.specialRequest && (
               <div className="md:col-span-2">
-                <span className="font-medium">Yêu cầu đặc biệt: </span>
+                <span className="font-medium">{t.labels.specialRequest}: </span>
                 {data.contact?.specialRequest}
               </div>
             )}
           </div>
         </div>
 
-        {/* === Danh sách khách === */}
         <div className={innerBlockClass}>
-          <h4 className="font-semibold text-white">Danh sách khách</h4>
+          <h4 className="font-semibold text-white">{t.labels.passengerList}</h4>
           <div className="mt-2 space-y-2">
             {data.guests.map((g, i) => (
-              <div
-                key={i}
-                className="rounded-lg border border-white/40 p-3 text-white/80"
-              >
+              <div key={i} className="rounded-lg border border-white/40 p-3 text-white/80">
                 <div>
-                  <span className="font-medium">Khách {i + 1}:</span>{" "}
-                  {g.fullName}
+                  <span className="font-medium">Khách {i + 1}:</span> {g.fullName}
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                  <div>Ngày sinh: {g.dob}</div>
-                  <div>Giới tính: {g.gender}</div>
-                  {g.idNumber && <div>CCCD/Passport: {g.idNumber}</div>}
-                  {g.weightKg && <div>Cân nặng: {g.weightKg} kg</div>}
-                  {g.nationality && <div>Quốc tịch: {g.nationality}</div>}
+                  <div>{t.labels.dob}: {g.dob}</div>
+                  <div>{t.labels.gender}: {g.gender}</div>
+                  {g.idNumber && <div>{t.labels.idNumber}: {g.idNumber}</div>}
+                  {g.weightKg && <div>{t.labels.weightKg}: {g.weightKg} kg</div>}
+                  {g.nationality && <div>{t.labels.nationality}: {g.nationality}</div>}
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* === Điều khoản === */}
         <label className="flex items-start gap-3">
           <input
             type="checkbox"
@@ -150,41 +156,33 @@ export default function ReviewConfirmStep() {
             className="mt-1 h-4 w-4 accent-green-500"
           />
           <span className="text-sm text-white">
-            Tôi đã đọc và đồng ý với mọi điều khoản dịch vụ. Tôi xác nhận thông
-            tin đặt bay.{" "}
-            <a
-              className="text-blue-400 underline"
-              href="/terms"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Xem điều khoản
+            {t.labels.termsText}{" "}
+            <a className="text-blue-400 underline" href="/terms" target="_blank" rel="noreferrer">
+              {t.labels.viewTerms}
             </a>
           </span>
         </label>
       </div>
 
-      {/* === Báo lỗi === */}
       {error && (
         <div className="text-sm text-white bg-red-900/40 border border-red-500/60 rounded-lg p-3 backdrop-blur-sm">
           {error}
         </div>
       )}
 
-      {/* === Nút hành động === */}
       <div className="flex justify-between">
         <button
           onClick={back}
           className="px-4 py-2 rounded-xl border border-white/40 bg-black/30 text-white hover:bg-black/50 transition backdrop-blur-sm"
         >
-          Quay lại
+          {t.buttons.back}
         </button>
         <button
           disabled={!data.acceptedTerms || submitting}
           onClick={handleConfirm}
           className="px-5 py-2 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 disabled:opacity-50 transition"
         >
-          {submitting ? "Đang xử lý..." : "Xác nhận"}
+          {submitting ? t.buttons.processing : t.buttons.confirm}
         </button>
       </div>
     </div>

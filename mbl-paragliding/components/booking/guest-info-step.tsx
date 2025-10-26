@@ -1,31 +1,68 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import { useBookingStore } from "@/store/booking-store";
+import { useBookingText } from "@/lib/booking/translations-booking";
 
 const genders = ["Nam", "Nữ", "Khác"] as const;
 
 export default function GuestInfoStep() {
+  const t = useBookingText();
   const data = useBookingStore((s) => s.data);
   const setGuest = useBookingStore((s) => s.setGuest);
   const back = useBookingStore((s) => s.back);
   const next = useBookingStore((s) => s.next);
 
-  // === Định nghĩa style chung ===
   const glassWrapperClass =
     "bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-5 space-y-6";
-
   const inputStyle =
     "mt-2 w-full rounded-lg border border-white/40 bg-black/30 px-3 py-2 text-white placeholder:text-white/70 backdrop-blur-sm";
-  
   const labelStyle = "block text-base font-medium text-white";
-  // =============================
+
+  const today = useMemo(() => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }, []);
+  const currentYear = today.getFullYear();
+
+  function validateGuest(g: any) {
+    const fullNameOk = Boolean(g.fullName?.trim());
+    const idOk = Boolean(g.idNumber?.trim());
+    const weightOk =
+      g.weightKg !== undefined &&
+      g.weightKg !== null &&
+      !Number.isNaN(Number(g.weightKg)) &&
+      Number(g.weightKg) > 0;
+
+    let dobOk = false;
+    let dobFutureErr = false;
+    let dobTooYoungErr = false;
+    if (g.dob) {
+      const d = new Date(g.dob);
+      d.setHours(0, 0, 0, 0);
+      if (d > today) dobFutureErr = true;
+      else if (d.getFullYear() === currentYear) dobTooYoungErr = true;
+      else dobOk = true;
+    }
+    return {
+      ok: fullNameOk && idOk && weightOk && dobOk && !dobFutureErr && !dobTooYoungErr,
+      errs: { fullNameOk, idOk, weightOk, dobOk, dobFutureErr, dobTooYoungErr },
+    };
+  }
+
+  const guestsValidation = Array.from({ length: data.guestsCount }).map(
+    (_, idx) => validateGuest(data.guests[idx] || {})
+  );
+  const allValid = guestsValidation.every((v) => v.ok);
 
   return (
     <form
-      className="space-y-6 text-white" // Thêm space-y-6 để tạo khoảng cách với nút
-      onSubmit={(e) => { e.preventDefault(); next(); }}
+      className="space-y-6 text-white"
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (allValid) next();
+      }}
     >
-      {/* === Bọc nội dung form trong div kính mờ === */}
       <div className={glassWrapperClass}>
         <p className="text-sm text-white">
           Vui lòng điền đầy đủ & chính xác thông tin cho từng hành khách.
@@ -34,72 +71,98 @@ export default function GuestInfoStep() {
         <div className="space-y-5">
           {Array.from({ length: data.guestsCount }).map((_, idx) => {
             const g = data.guests[idx] || {};
+            const v = guestsValidation[idx];
+
             return (
-              // === THAY ĐỔI: Style cho fieldset ===
               <fieldset key={idx} className="rounded-2xl border border-white/40 p-4">
-                <legend className="font-semibold text-white px-2">Khách {idx + 1}</legend>
+                <legend className="font-semibold text-white px-2">
+                  {t.labels.passengerList} #{idx + 1}
+                </legend>
+
                 <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    {/* === THAY ĐỔI: Style cho label === */}
-                    <label className={labelStyle}>Họ và tên (passport)</label>
+                    <label className={labelStyle}>{t.labels.fullName}</label>
                     <input
                       type="text"
                       value={g.fullName || ""}
                       onChange={(e) => setGuest(idx, { fullName: e.target.value })}
-                      // === THAY ĐỔI: Style cho input ===
                       className={inputStyle}
                       required
                     />
+                    {!v.errs.fullNameOk && (
+                      <p className="mt-1 text-xs text-red-300">{t.messages.errors.requiredField}</p>
+                    )}
                   </div>
+
                   <div>
-                    <label className={labelStyle}>Ngày sinh</label>
+                    <label className={labelStyle}>{t.labels.dob}</label>
                     <input
                       type="date"
                       value={g.dob || ""}
                       onChange={(e) => setGuest(idx, { dob: e.target.value })}
-                      // === THAY ĐỔI: Style cho input ===
                       className={`${inputStyle} [color-scheme:dark]`}
                       required
                     />
+                    {v.errs.dobFutureErr && (
+                      <p className="mt-1 text-xs text-red-300">{t.messages.errors.dobInFuture}</p>
+                    )}
+                    {!v.errs.dobFutureErr && !v.errs.dobOk && (
+                      <p className="mt-1 text-xs text-red-300">{t.messages.errors.dobTooYoung}</p>
+                    )}
                   </div>
+
                   <div>
-                    <label className={labelStyle}>Giới tính</label>
+                    <label className={labelStyle}>{t.labels.gender}</label>
                     <select
-                      // === THAY ĐỔI: Style cho input ===
                       className={inputStyle}
                       value={(g.gender as any) || "Nam"}
                       onChange={(e) => setGuest(idx, { gender: e.target.value as any })}
                     >
-                      {/* === THAY ĐỔI: Style cho option === */}
-                      {genders.map((x) => <option key={x} value={x} className="bg-neutral-800 text-white">{x}</option>)}
+                      {genders.map((x) => (
+                        <option key={x} value={x} className="bg-neutral-800 text-white">
+                          {x}
+                        </option>
+                      ))}
                     </select>
                   </div>
+
                   <div>
-                    <label className={labelStyle}>Số CCCD/Passport</label>
+                    <label className={labelStyle}>{t.labels.idNumber}</label>
                     <input
                       type="text"
                       value={g.idNumber || ""}
                       onChange={(e) => setGuest(idx, { idNumber: e.target.value })}
                       className={inputStyle}
+                      required
                     />
+                    {!v.errs.idOk && (
+                      <p className="mt-1 text-xs text-red-300">{t.messages.errors.requiredField}</p>
+                    )}
                   </div>
+
                   <div>
-                    <label className={labelStyle}>Cân nặng (kg)</label>
+                    <label className={labelStyle}>{t.labels.weightKg}</label>
                     <input
-                      type="text" // Đổi sang text để ẩn nút tăng/giảm
-                      inputMode="decimal" // Hiển thị bàn phím số (cho phép dấu chấm)
+                      type="text"
+                      inputMode="decimal"
                       value={g.weightKg ?? ""}
                       onChange={(e) => {
                         const val = e.target.value;
                         if (val === "" || /^[0-9]*\.?[0-9]*$/.test(val)) {
-                           setGuest(idx, { weightKg: parseFloat(val) || undefined })
+                          const parsed = parseFloat(val);
+                          setGuest(idx, { weightKg: isNaN(parsed) ? undefined : parsed });
                         }
                       }}
                       className={inputStyle}
+                      required
                     />
+                    {!v.errs.weightOk && (
+                      <p className="mt-1 text-xs text-red-300">{t.messages.errors.weightInvalid}</p>
+                    )}
                   </div>
+
                   <div>
-                    <label className={labelStyle}>Quốc tịch</label>
+                    <label className={labelStyle}>{t.labels.nationality}</label>
                     <input
                       type="text"
                       value={g.nationality || ""}
@@ -113,25 +176,21 @@ export default function GuestInfoStep() {
           })}
         </div>
       </div>
-      {/* === Kết thúc div bọc === */}
 
-
-      {/* Các nút nằm BÊN NGOÀI khung kính mờ */}
       <div className="flex justify-between">
-        <button 
-          type="button" 
-          onClick={back} 
-          // === THAY ĐỔI: Style nút Quay lại ===
+        <button
+          type="button"
+          onClick={back}
           className="px-4 py-2 rounded-xl border border-white/40 bg-black/30 text-white hover:bg-black/50 transition backdrop-blur-sm"
         >
-          Quay lại
+          {t.buttons.back}
         </button>
-        <button 
-          type="submit" 
-          // === THAY ĐỔI: Style nút Tiếp tục ===
-          className="px-5 py-2 rounded-xl bg-accent text-white font-semibold hover:bg-accent/90 transition"
+        <button
+          type="submit"
+          disabled={!allValid}
+          className="px-5 py-2 rounded-xl bg-accent text-white font-semibold hover:bg-accent/90 transition disabled:opacity-50"
         >
-          Tiếp tục
+          {t.buttons.next}
         </button>
       </div>
     </form>

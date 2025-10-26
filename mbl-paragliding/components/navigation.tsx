@@ -84,15 +84,16 @@ export function Navigation() {
   // - Bỏ: Về chúng tôi / Điểm bay nổi bật / Chuẩn bị trước khi bay / Liên hệ
   // - Đổi "Blog" -> "Tin tức" (giữ đường dẫn /blog)
   // - Thêm: "Kiến thức dù lượn - Học bay" (/kien-thuc)
-  const navItems: NavItem[] = [
-    { type: "hash", href: "/#hero", hashId: "hero", label: t?.nav?.home ?? "Trang chủ" },
-    { type: "path", href: "/pilots", label: t?.nav?.pilots ?? "Phi công" },
-    { type: "path", href: "/homestay", label: t?.nav?.homestay ?? "Homestay" },
-    { type: "path", href: "/booking", label: t?.nav?.booking ?? "Đặt vé" },
-    { type: "path", href: "/store", label: "Cửa hàng" },
-    { type: "path", href: "/blog", label: "Tin tức" },
-    { type: "path", href: "/knowledge", label: "Kiến thức dù lượn - Học bay" },
-  ];
+const navItems: NavItem[] = [
+  { type: "hash", href: "/#hero", hashId: "hero", label: t?.nav?.home ?? "Trang chủ" },
+  { type: "path", href: "/pilots", label: t?.nav?.pilots ?? "Phi công" },
+  { type: "path", href: "/homestay", label: t?.nav?.homestay ?? "Homestay & Cà phê" },
+  { type: "path", href: "/booking", label: t?.nav?.booking ?? "Đặt bay" },
+  { type: "path", href: "/store", label: t?.nav?.store ?? "Cửa hàng" },
+  { type: "path", href: "/blog", label: t?.nav?.blog ?? "Tin tức" },
+  { type: "path", href: "/knowledge", label: t?.nav?.knowledge ?? "Kiến thức dù lượn – Học bay" },
+];
+
 
   const strongShadow = "0 2px 8px rgba(0,0,0,.7)";
   const subtleShadow = "0 1px 4px rgba(0,0,0,.5)";

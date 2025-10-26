@@ -1,37 +1,54 @@
 // mbl-paragliding/lib/api.ts
-// Mặc định gọi same-origin. Nếu cần gọi backend khác, dùng NEXT_PUBLIC_API_BASE_URL.
-// Riêng các đường dẫn /api/* khi chạy trên trình duyệt sẽ luôn ưu tiên same-origin.
-
 const isBrowser = typeof window !== "undefined";
 
 function normalizeBase(raw: string) {
   return raw.replace(/\/$/, "");
 }
+function isAbsoluteUrl(url: string) {
+  return /^https?:\/\//i.test(url);
+}
 
-async function api<T>(path: string, init?: RequestInit): Promise<T> {
+export default async function api<T>(path: string, init?: RequestInit): Promise<T> {
+  if (isAbsoluteUrl(path)) {
+    return fetchJson<T>(path, init);
+  }
   const p = path.startsWith("/") ? path : `/${path}`;
+  let base = "";
 
-  // Nếu đang ở browser và gọi /api/* => ưu tiên same-origin (BASE = "")
-  const preferSameOrigin = isBrowser && p.startsWith("/api/");
+  const publicBase = (process.env.NEXT_PUBLIC_API_BASE_URL || "").trim();
+  if (publicBase) {
+    base = normalizeBase(publicBase); // Cloudflared/Production
+  } else if (!isBrowser) {
+    base = normalizeBase(process.env.INTERNAL_API_URL || "http://localhost:4000"); // SSR
+  } else {
+    base = ""; // Dev browser -> rely on next.config.mjs rewrites
+  }
 
-  const raw =
-    process.env.NEXT_PUBLIC_API_BASE_URL?.trim() ??
-    (isBrowser ? "" : process.env.INTERNAL_API_URL || "http://localhost:4000");
+  return fetchJson<T>(`${base}${p}`, init);
+}
 
-  const BASE = preferSameOrigin ? "" : normalizeBase(raw);
-
-  const res = await fetch(`${BASE}${p}`, {
-    ...init,
-    headers: { "Content-Type": "application/json", ...(init?.headers || {}) },
+async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(url, {
     cache: "no-store",
+    headers: { "Content-Type": "application/json", ...(init?.headers || {}) },
+    ...init,
   });
+  const contentType = res.headers.get("content-type") || "";
 
   if (!res.ok) {
     const msg = await res.text().catch(() => "");
-    throw new Error(msg || `Request failed: ${res.status}`);
+    throw new Error(msg || `${res.status} ${res.statusText}`);
   }
+  if (res.status === 204) return {} as T;
 
-  return res.json() as Promise<T>;
+  if (contentType.includes("application/json")) {
+    return (await res.json()) as T;
+  }
+  try {
+    const text = await res.text();
+    return JSON.parse(text) as T;
+  } catch {
+    // chấp nhận non-JSON
+    return undefined as T;
+  }
 }
-
-export default api;

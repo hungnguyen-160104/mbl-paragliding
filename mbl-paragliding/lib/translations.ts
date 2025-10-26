@@ -9,10 +9,11 @@ export const translations = {
       booking: "Đặt bay",
       preNotice: "Chuẩn Bị Trước Khi Bay",
       contact: "Liên hệ",
-      bookNow: "Đặt ngay",
-          // ➕ thêm:
-    blog: "Blog",
-    login: "Đăng nhập",
+      bookNow: "Đặt ngay",      
+      login: "Đăng nhập",
+      blog: "Tin tức",
+      store: "Cửa hàng",
+      knowledge: "Kiến thức dù lượn – Học bay"
     },
     hero: {
       title: "MEBAYLUON PARAGLIDING",
@@ -21,6 +22,17 @@ export const translations = {
       bookNow: "Đặt Lịch Bay Ngay",
       learnMore: "Tìm hiểu thêm",
     },
+    about: {
+  title: "VỀ CHÚNG TÔI",
+  subtitle: "Mebayluon Paragliding – nơi những giấc mơ bay cao",
+  description: [
+    "Chúng tôi đồng hành cùng bạn trong những chuyến bay đầy cảm xúc.",
+    "Trang thiết bị đạt tiêu chuẩn quốc tế, đảm bảo an toàn tuyệt đối.",
+    "Luôn mang đến trải nghiệm bay tự do và đáng nhớ nhất cho bạn.",
+  ],
+},
+
+
     spots: {
       title: "ĐIỂM BAY NỔI BẬT",
       subtitle: "Khám phá vẻ đẹp Việt Nam từ trên cao với những điểm bay tuyệt vời nhất",
@@ -96,10 +108,10 @@ export const translations = {
         clothing: {
           title: "Trang phục",
           items: [
-            "Mặc quần dài, áo gọn gàng, TRÁNH váy - ưu tiên đồ kín gió, màu tươi cho đẹp ảnh",
-            "Mang túi nhỏ (1-2kg) đựng đồ cá nhân (điện thoại, giấy tờ, chìa khóa). KHÔNG NÊN mang balo to",
+            "Quần áo gọn gàng, không nên mặc váy, nên mặc quần dài, áo dài tay màu sắc sặc sỡ lên hình cho nổi bật",
+            "Có thể mang theo khi bay 1 túi nhỏ 1-2kg đựng đồ cá nhân như điện thoại, chìa khóa, giấy tờ tùy thân",
             "Có thể đeo kính râm/kính cận khi bay",
-            "Ảnh/clip sẽ được gửi sau khi hạ cánh - điện thoại cần còn pin và đủ dung lượng (4GB)",
+            "Cần mang theo điện thoại còn ít nhất trống 4GB dung lượng trống để nhận ảnh và video sau chuyến bay",
             "Không nên uống rượu/bia trước khi bay",
           ],
         },
@@ -107,15 +119,18 @@ export const translations = {
           title: "Đồ dùng cần thiết",
           list: [
             "Giày thể thao hoặc giày leo núi (bắt buộc)",
-            "Áo khoác gió (nhiệt độ trên cao thấp hơn)",
-            "Kính râm (bảo vệ mắt khỏi gió và nắng)",
-            "Kem chống nắng",
-            "Nước uống",
+            "Mặc ấm vào mùa đông, áo khoác mỏng tránh nắng vào mùa hè",
+            "Có thể bôi kem chống nắng",
           ],
         },
       },
+      posters: {
+  title: "ĐIỀU KIỆN QUY ĐỊNH ĐỐI VỚI HÀNH KHÁCH",
+  subtitle: "",
+},
+
       requirements: {
-        title: "ĐIỀU KIỆN QUY ĐỊNH",
+        title: "ĐIỀU KIỆN QUY ĐỊNH ĐỐI VỚI HÀNH KHÁCH",
         eligible: {
           title: "Điều kiện tham gia",
           items: [
@@ -131,7 +146,6 @@ export const translations = {
           items: [
             "Đang mang thai",
             "Có bệnh tim mạch, huyết áp cao không kiểm soát",
-            "Vừa trải qua phẫu thuật (trong vòng 6 tháng)",
             "Có vấn đề về cột sống, cổ, lưng nghiêm trọng",
           ],
         },
@@ -152,6 +166,8 @@ export const translations = {
       contactNow: "Liên hệ ngay",
       phone: "Điện thoại",
       support247: "Hỗ trợ 24/7",
+      address: "Địa chỉ",
+  workingHours: "Giờ làm việc",
       social: {
         facebook: "Theo dõi fanpage để cập nhật tin tức mới nhất",
         zalo: "Chat trực tiếp qua Zalo để được tư vấn nhanh",
@@ -166,9 +182,10 @@ export const translations = {
       intro: {
         title: "Chuyên nghiệp - Kinh nghiệm - Tận tâm",
         description:
-          "Tất cả phi công của chúng tôi đều được đào tạo bài bản theo tiêu chuẩn quốc tế, có chứng chỉ IPPI và nhiều năm kinh nghiệm bay dù lượn. Họ không chỉ là những phi công giỏi mà còn là những người bạn đồng hành nhiệt tình.",
+          "Tất cả phi công của chúng tôi đều được đào tạo bài bản theo tiêu chuẩn quốc tế, có chứng chỉ APPI và nhiều năm kinh nghiệm bay dù lượn. Họ không chỉ là những phi công giỏi mà còn là những người bạn đồng hành nhiệt tình.",
       },
       viewProfile: "Xem hồ sơ",
+      nickname: "Biệt danh",
       experience: "Kinh nghiệm",
       flights: "Chuyến bay",
       hours: "Giờ bay",
@@ -307,6 +324,10 @@ export const translations = {
       preNotice: "Pre-Flight Preparation",
       contact: "Contact",
       bookNow: "Book Now",
+      store: "Store",
+      blog: "Blog",
+      knowledge: "Paragliding Knowledge – Learn to Fly",
+
     },
     hero: {
       title: "MEBAYLUON PARAGLIDING",
@@ -315,6 +336,17 @@ export const translations = {
       bookNow: "Book Your Flight Now",
       learnMore: "Learn More",
     },
+    about: {
+  title: "ABOUT US",
+  subtitle: "Mebayluon Paragliding – where dreams take flight",
+  description: [
+    "We accompany you on every emotional and unforgettable flight.",
+    "Our equipment meets international standards to ensure absolute safety.",
+    "We are your trusted partner on every breathtaking adventure in the sky.",
+  ],
+},
+
+
     spots: {
       title: "Top Flying Spots",
       subtitle: "Discover the beauty of Vietnam from above with the best flying spots",
@@ -388,28 +420,32 @@ export const translations = {
       preparation: {
         title: "PREPARATION BEFORE FLYING",
         clothing: {
-          title: "Clothing",
-          items: [
-            "Wear long pants, neat clothes, AVOID skirts - prioritize windproof clothes, bright colors for beautiful photos",
-            "Bring a small bag (1-2kg) for personal items (phone, papers, keys). DO NOT bring large backpack",
-            "You can wear sunglasses/prescription glasses while flying",
-            "Photos/clips will be sent after landing - phone needs sufficient battery and storage (4GB)",
-            "Do not drink alcohol/beer before flying",
-          ],
-        },
-        items: {
-          title: "Essential items",
-          list: [
-            "Sports shoes or hiking boots (required)",
-            "Windbreaker jacket (temperature is lower at altitude)",
-            "Sunglasses (protect eyes from wind and sun)",
-            "Sunscreen",
-            "Drinking water",
-          ],
-        },
+  title: "Clothing",
+  items: [
+    "Wear comfortable clothing; avoid skirts, prefer long pants and long sleeves in bright colors for better photos.",
+    "You may bring a small 1–2 kg bag for personal items such as a phone, keys, and ID.",
+    "You can wear sunglasses or prescription glasses during the flight.",
+    "Make sure your phone has at least 4 GB of free space to receive photos and videos after landing.",
+    "Avoid drinking alcohol before flying.",
+  ],
+},
+items: {
+  title: "Essential items",
+  list: [
+    "Sports or hiking shoes (mandatory)",
+    "Dress warmly in winter and wear a light jacket in summer.",
+    "You may apply sunscreen.",
+  ],
+},
+
+
       },
+      posters: {
+  title: "Passenger Requirements and Regulations",
+  subtitle: "",
+},
       requirements: {
-        title: "TERMS AND CONDITIONS",
+        title: "Passenger Requirements and Regulations",
         eligible: {
           title: "Eligibility requirements",
           items: [
@@ -424,7 +460,6 @@ export const translations = {
           title: "Not recommended if",
           items: [
             "Currently pregnant",
-            "Have uncontrolled heart disease or high blood pressure",
             "Recently had surgery (within 6 months)",
             "Have serious spine, neck, or back problems",
           ],
@@ -432,7 +467,7 @@ export const translations = {
         special: {
           title: "Special notes",
           items: [
-            "Each flight: passenger flies with one professional pilot, controlled by the pilot",
+            "Each flight: One passenger flies with a professional pilot. The pilot is fully in control of the flight, so just sit back, relax, enjoy the scenery, and pose for beautiful photos and videos in the sky",
             "Children over 3 years old are counted as 1 separate passenger with pilot (cannot fly with parents/relatives as there is only 1 seat)",
           ],
         },
@@ -446,6 +481,8 @@ export const translations = {
       contactNow: "Contact Now",
       phone: "Phone",
       support247: "24/7 Support",
+      address: "Address",
+  workingHours: "Working Hours",
       social: {
         facebook: "Follow our fanpage for latest updates",
         zalo: "Chat directly via Zalo for quick consultation",
@@ -460,9 +497,10 @@ export const translations = {
       intro: {
         title: "Professional - Safe - Dedicated",
         description:
-          "All our pilots are professionally trained to international standards, hold IPPI certificates, and have many years of paragliding experience. They are not only skilled pilots but also enthusiastic companions.",
+          "All our pilots are professionally trained to international standards, hold APPI certificates, and have many years of paragliding experience. They are not only skilled pilots but also enthusiastic companions.",
       },
       viewProfile: "View Profile",
+      nickname: "Nickname",
       experience: "Experience",
       flights: "Flights",
       hours: "Flight Hours",
@@ -600,6 +638,10 @@ export const translations = {
       preNotice: "Préparation Avant le Vol",
       contact: "Contact",
       bookNow: "Réserver",
+      store: "Boutique",
+blog: "Blog",
+knowledge: "Connaissances du parapente – Apprendre à voler",
+
     },
     hero: {
       title: "MEBAYLUON PARAGLIDING",
@@ -608,6 +650,16 @@ export const translations = {
       bookNow: "Réservez Votre Vol",
       learnMore: "En savoir plus",
     },
+    about: {
+  title: "À PROPOS DE NOUS",
+  subtitle: "Mebayluon Paragliding – là où les rêves s'envolent",
+  description: [
+    "Nous vous accompagnons dans chaque vol plein d’émotions et de sensations.",
+    "Nos équipements répondent aux normes internationales pour garantir une sécurité absolue.",
+    "Nous sommes votre partenaire de confiance pour chaque aventure inoubliable dans le ciel.",
+  ],
+},
+
     spots: {
       title: "Meilleurs Sites de Vol",
       subtitle: "Découvrez la beauté du Vietnam d'en haut avec les meilleurs sites de vol",
@@ -681,28 +733,32 @@ export const translations = {
       preparation: {
         title: "PRÉPARATION AVANT LE VOL",
         clothing: {
-          title: "Vêtements",
-          items: [
-            "Portez un pantalon long, des vêtements soignés, ÉVITEZ les jupes - privilégiez les vêtements coupe-vent, couleurs vives pour de belles photos",
-            "Apportez un petit sac (1-2kg) pour les objets personnels (téléphone, documents, clés). NE PAS apporter de grand sac à dos",
-            "Vous pouvez porter des lunettes de soleil/lunettes de vue pendant le vol",
-            "Les photos/clip seront envoyées après l'atterrissage - le téléphone doit avoir suffisamment de batterie et de stockage (4GB)",
-            "Ne buvez pas d'alcool/bière avant de voler",
-          ],
-        },
-        items: {
-          title: "Articles essentiels",
-          list: [
-            "Chaussures de sport ou bottes de randonnée (obligatoire)",
-            "Vetromante (la température est plus basse en altitude)",
-            "Lunettes de soleil (protègent les yeux du vent et du soleil)",
-            "Crème solaire",
-            "Eau potable",
-          ],
-        },
+  title: "Vêtements",
+  items: [
+    "Portez des vêtements confortables ; évitez les jupes, privilégiez les pantalons longs et les manches longues aux couleurs vives pour de belles photos.",
+    "Vous pouvez apporter un petit sac de 1 à 2 kg pour vos effets personnels (téléphone, clés, papiers d’identité).",
+    "Vous pouvez porter des lunettes de soleil ou de vue pendant le vol.",
+    "Assurez-vous que votre téléphone dispose d’au moins 4 Go d’espace libre pour recevoir les photos et vidéos après l’atterrissage.",
+    "Évitez de consommer de l’alcool avant le vol.",
+  ],
+},
+items: {
+  title: "Objets essentiels",
+  list: [
+    "Chaussures de sport ou de randonnée (obligatoire)",
+    "Habillez-vous chaudement en hiver et portez une veste légère en été.",
+    "Vous pouvez appliquer de la crème solaire.",
+  ],
+},
       },
+
+      posters: {
+  title: "Conditions et Règlements pour les Passagers",
+  subtitle: "",
+},
+
       requirements: {
-        title: "CONDITIONS GÉNÉRALES",
+        title: "Conditions et Règlements pour les Passagers",
         eligible: {
           title: "Conditions d'éligibilité",
           items: [
@@ -717,7 +773,6 @@ export const translations = {
           title: "Non recommandé si",
           items: [
             "Actuellement enceinte",
-            "Avoir une maladie cardiaque ou une hypertension artérielle non contrôlée",
             "Nedavno stečenec (v zahodnem šestem mesecov)",
             "Avoir de graves problèmes de colonne vertébrale, de cou ou de dos",
           ],
@@ -725,7 +780,7 @@ export const translations = {
         special: {
           title: "Notes spéciales",
           items: [
-            "Chaque vol: le passager vole avec un pilote professionnel, contrôlé par le pilote",
+            "Chaque vol : Un passager vole avec un pilote professionnel. Le pilote contrôle entièrement le vol ; il vous suffit de vous détendre, d’admirer le paysage et de poser pour de magnifiques photos et vidéos dans le ciel",
             "Les enfants de plus de 3 ans comptent pour 1 passager séparé avec pilote (ne peuvent pas voler avec les parents/relatives car il n'y a qu'1 siège)",
           ],
         },
@@ -739,6 +794,8 @@ export const translations = {
       contactNow: "Contactez Maintenant",
       phone: "Téléphone",
       support247: "Support 24/7",
+      address: "Adresse",
+  workingHours: "Heures d’ouverture",
       social: {
         facebook: "Suivez notre page pour les dernières mises à jour",
         zalo: "Obstojtec zalo za hitro konsultacijo",
@@ -753,9 +810,10 @@ export const translations = {
       intro: {
         title: "Professionnel - Sûr - Dévoué",
         description:
-          "Tous nos pilotes sont formés professionnellement selon les normes internationales, détiennent des certificats IPPI et ont de nombreuses années d'expérience en parapente. Ils ne sont pas seulement des pilotes qualifiés mais aussi des compagnons enthousiastes.",
+          "Tous nos pilotes sont formés professionnellement selon les normes internationales, détiennent des certificats APPI et ont de nombreuses années d'expérience en parapente. Ils ne sont pas seulement des pilotes qualifiés mais aussi des compagnons enthousiastes.",
       },
       viewProfile: "Voir le profil",
+      nickname: "Surnom",
       experience: "Expérience",
       flights: "Vols",
       hours: "Heures de vol",
@@ -895,6 +953,10 @@ export const translations = {
       preNotice: "Подготовка к Полету",
       contact: "Контакты",
       bookNow: "Забронировать",
+      store: "Магазин",
+      blog: "Блог",
+      knowledge: "Парапланеризм — Учись летать",
+
     },
     hero: {
       title: "MEBAYLUON PARAGLIDING",
@@ -903,6 +965,16 @@ export const translations = {
       bookNow: "Забронировать Полет",
       learnMore: "Узнать больше",
     },
+    about: {
+      title: "О НАС",
+      subtitle: "Mebayluon Paragliding – место, где мечты взлетают",
+      description: [
+        "Мы сопровождаем вас в каждом полёте, полном эмоций и впечатлений.",
+        "Наше оборудование соответствует международным стандартам, обеспечивая полную безопасность.",
+        "Мы ваш надёжный партнёр в каждом захватывающем приключении в небе.",
+      ],
+    },
+
     spots: {
       title: "Лучшие Места для Полетов",
       subtitle: "Откройте для себя красоту Вьетнама с высоты птичьего полета",
@@ -976,28 +1048,33 @@ export const translations = {
       preparation: {
         title: "ПОДГОТОВКА ПЕРЕД ПОЛЕТОМ",
         clothing: {
-          title: "Одежда",
-          items: [
-            "Носите длинные брюки, аккуратную одежду, ИЗБЕГАЙТЕ юбок - отдавайте предпочтение ветрозащитной одежде, ярким цветам для красивых фотографий",
-            "Возьмите небольшую сумку (1-2 кг) для личных вещей (телефон, документы, ключи). НЕ берите большой рюкзак",
-            "Вы можете носить солнцезащитные очки/очки по рецепту во время полета",
-            "Фото/клипы будут отправлены после посадки - телефон должен иметь достаточный заряд и память (4 ГБ)",
-            "Не пейте алкоголь/пиво перед полетом",
-          ],
-        },
-        items: {
-          title: "Необходимые предметы",
-          list: [
-            "Спортивная обувь или походные ботинки (обязательно)",
-            "Ветровка (температура ниже на высоте)",
-            "Солнцезащитные очки (защищают глаза от ветра и солнца)",
-            "Солнцезащитный крем",
-            "Питьевая вода",
-          ],
-        },
+  title: "Одежда",
+  items: [
+    "Носите удобную одежду; избегайте юбок, предпочтительны длинные брюки и рубашки с длинными рукавами ярких цветов — они лучше смотрятся на фото.",
+    "Можно взять небольшую сумку весом 1–2 кг для личных вещей (телефон, ключи, документы).",
+    "Можно летать в солнечных или коррекционных очках.",
+    "Убедитесь, что на телефоне есть как минимум 4 ГБ свободного места для получения фото и видео после полета.",
+    "Не рекомендуется употреблять алкоголь перед полетом.",
+  ],
+},
+items: {
+  title: "Необходимые вещи",
+  list: [
+    "Кроссовки или треккинговая обувь (обязательно)",
+    "Одевайтесь теплее зимой и носите легкую куртку летом.",
+    "Можно нанести солнцезащитный крем.",
+  ],
+},
+
       },
+
+      posters: {
+  title: "Требования и правила для пассажиров",
+  subtitle: "",
+},
+
       requirements: {
-        title: "УСЛОВИЯ И ПОЛОЖЕНИЯ",
+        title: "Требования и правила для пассажиров",
         eligible: {
           title: "Требования к участию",
           items: [
@@ -1012,7 +1089,6 @@ export const translations = {
           title: "Не рекомендуется, если",
           items: [
             "В настоящее время беременна",
-            "Имеете неконтролируемое заболевание сердца или высокое кровяное давление",
             "Недавно перенесли операцию (в течение 6 месяцев)",
             "Имеете серьезные проблемы с позвоночником, шеей или спиной",
           ],
@@ -1020,7 +1096,7 @@ export const translations = {
         special: {
           title: "Особые примечания",
           items: [
-            "Каждый полет: пассажир летит с одним профессиональным пилотом, управляемым пилотом",
+            "Каждый полёт: Один пассажир летит с профессиональным пилотом. Полётом полностью управляет пилот, вам остаётся только расслабиться, наслаждаться видами и сделать красивые фото и видео в небе",
             "Дети старше 3 лет считаются 1 отдельным пассажиром с пилотом (не могут летать с родителями/родственниками, так как есть только 1 место)",
           ],
         },
@@ -1034,6 +1110,8 @@ export const translations = {
       contactNow: "Связаться Сейчас",
       phone: "Телефон",
       support247: "Поддержка 24/7",
+        address: "Адрес", // ✅
+  workingHours: "Часы работы", // ✅
       social: {
         facebook: "Следите за нашей страницей для последних обновлений",
         zalo: "Общайтесь напрямую через Zalo для быстрой консультации",
@@ -1048,9 +1126,10 @@ export const translations = {
       intro: {
         title: "Профессионально - Безопасно - Преданно",
         description:
-          "Все наши пилоты профессионально обучены по международным стандартам, имеют сертификаты IPPI и многолетний опыт парапланеризма. Они не только квалифицированные пилоты, но и энтузиасты-компаньоны.",
+          "Все наши пилоты профессионально обучены по международным стандартам, имеют сертификаты APPI и многолетний опыт парапланеризма. Они не только квалифицированные пилоты, но и энтузиасты-компаньоны.",
       },
       viewProfile: "Посмотреть профиль",
+      nickname: "Прозвище",
       experience: "Опыт",
       flights: "Полеты",
       hours: "Часы полета",

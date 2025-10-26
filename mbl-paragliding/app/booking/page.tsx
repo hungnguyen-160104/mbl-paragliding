@@ -9,9 +9,11 @@ import ReviewConfirmStep from "@/components/booking/review-confirm-step";
 import SuccessStep from "@/components/booking/success-step";
 import StepIndicator from "@/components/booking/step-indicator";
 import PriceSummary from "@/components/booking/price-summary";
+import { useBookingText } from "@/lib/booking/translations-booking";
 
 export default function BookingPage() {
   const step = useBookingStore((s) => s.step);
+  const t = useBookingText();
 
   const backgroundStyle = {
     backgroundImage: "url('/hinh-nen.jpg')",
@@ -25,36 +27,27 @@ export default function BookingPage() {
 
   return (
     <main className="min-h-screen" style={backgroundStyle}>
-      <div className="mx-auto max-w-5xl px-4 py-8 text-white">
-        
+      <div className="mx-auto max-w-5xl px-4 pt-28 pb-8 text-white">
         <h1
-          className="text-3xl font-bold tracking-tight"
+          className="text-3xl font-bold tracking-tight text-center"
           style={{ textShadow: "0 2px 4px rgba(0,0,0,0.5)" }}
         >
-          Đặt bay (Book your flight)
+          {t.pageTitle}
         </h1>
+
         <p
-          className="text-neutral-200 mt-1"
+          className="mt-1 text-center"
           style={{ textShadow: "0 1px 3px rgba(0,0,0,0.4)" }}
         >
-          Điều hướng 5 bước • Lưu ý: thông tin & giá có thể thay đổi theo thời
-          gian.
+          {t.pageSubtitle}
         </p>
-        
+
         <div className={`mt-6 ${glassWrapperClass} text-white`}>
           <StepIndicator />
         </div>
 
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6">
-          
-          {/* === THAY ĐỔI TẠI ĐÂY === */}
-          {/* Xóa logic cho bước 5, giờ đây tất cả các bước (1-5)
-              sẽ không có wrapper và tự quản lý style */}
-          <div
-            className={""} 
-          >
-          {/* === KẾT THÚC THAY ĐỔI === */}
-
+          <div>
             {step === 1 && <SelectFlightStep />}
             {step === 2 && <ContactInfoStep />}
             {step === 3 && <GuestInfoStep />}

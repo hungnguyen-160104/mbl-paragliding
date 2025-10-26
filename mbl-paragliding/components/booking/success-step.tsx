@@ -2,8 +2,10 @@
 import React from "react";
 import { useBookingStore } from "@/store/booking-store";
 import { LOCATIONS } from "@/lib/booking/calculate-price";
+import { useBookingText } from "@/lib/booking/translations-booking";
 
 export default function SuccessStep() {
+  const t = useBookingText();
   const data = useBookingStore((s) => s.data);
   const reset = useBookingStore((s) => s.reset);
   const cfg = LOCATIONS[data.location];
@@ -11,22 +13,17 @@ export default function SuccessStep() {
   const zaloQR = process.env.NEXT_PUBLIC_ZALO_QR_URL;
   const whatsappQR = process.env.NEXT_PUBLIC_WHATSAPP_QR_URL;
 
-  const glassWrapperClass = "bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-5 space-y-6";
+  const glassWrapperClass =
+    "bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-5 space-y-6";
   const innerBlockClass = "rounded-2xl border border-white/40 p-4 text-center";
-
-  // === THAY ĐỔI: Style cho nút bản đồ ===
-  const mapButtonStyle = "inline-flex items-center justify-center px-2 py-1 ml-2 rounded-md bg-red-600 text-white text-xs font-semibold hover:bg-red-700 transition";
-  // ======================================
+  const mapButtonStyle =
+    "inline-flex items-center justify-center px-2 py-1 ml-2 rounded-md bg-red-600 text-white text-xs font-semibold hover:bg-red-700 transition";
 
   return (
     <div className="space-y-6 text-white">
-
       <div className={glassWrapperClass}>
-        <h3 className="text-lg font-semibold text-white">HOÀN TẤT</h3>
-        <p className="text-white/90">
-          Cảm ơn đặt chỗ của bạn! Chúng tôi sẽ liên hệ trực tiếp để xác nhận thông tin chuyến bay.
-          Nếu cần hỗ trợ nhanh, vui lòng liên hệ hotline hiển thị trên website.
-        </p>
+        <h3 className="text-lg font-semibold text-white">{t.messages.successTitle}</h3>
+        <p className="text-white/90">{t.messages.successBody}</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {zaloQR && (
@@ -44,36 +41,33 @@ export default function SuccessStep() {
         </div>
 
         <div className="rounded-2xl border border-white/40 p-4">
-          <h4 className="font-semibold text-white">Lưu ý trước chuyến bay</h4>
+          <h4 className="font-semibold text-white">{t.messages.preflightTitle}</h4>
           <ol className="list-decimal ml-5 mt-2 space-y-1 text-sm text-white/80">
-            <li>Có mặt tại điểm bay trước 30 phút để làm thủ tục Check-in.</li>
-            <li>Trang phục: nên đi giày thể thao; không đi giày cao gót; quần áo dài tay màu sắc sặc sỡ; có thể đeo kính; chuẩn bị điện thoại còn trống ~4GB để nhận ảnh/video.</li>
+            <li>{t.messages.preflightNotes[0]}</li>
+            <li>{t.messages.preflightNotes[1]}</li>
             <li>
-              Toạ độ điểm bay:
+              {t.messages.preflightNotes[2]}
               {cfg.coordinates?.takeoff && (
                 <>
-                  {" "}Cất cánh: 
-                  {/* === THAY ĐỔI: Sử dụng nút đỏ === */}
+                  {" "}Cất cánh:
                   <a className={mapButtonStyle} href={cfg.coordinates.takeoff} target="_blank" rel="noreferrer">
-                    Xem bản đồ
+                    {t.buttons.viewMap}
                   </a>
                 </>
               )}
               {cfg.coordinates?.landing && (
                 <>
-                  {" "}• Hạ cánh: 
-                  {/* === THAY ĐỔI: Sử dụng nút đỏ === */}
+                  {" "}• Hạ cánh:
                   <a className={mapButtonStyle} href={cfg.coordinates.landing} target="_blank" rel="noreferrer">
-                    Xem bản đồ
+                    {t.buttons.viewMap}
                   </a>
                 </>
               )}
-              {/* Thêm style tương tự nếu có điểm đón */}
               {cfg.coordinates?.pickup && (
                 <>
                   {" "}• Điểm đón (HN):
                   <a className={mapButtonStyle} href={cfg.coordinates.pickup} target="_blank" rel="noreferrer">
-                    Xem bản đồ
+                    {t.buttons.viewMap}
                   </a>
                 </>
               )}
@@ -87,7 +81,7 @@ export default function SuccessStep() {
           onClick={reset} 
           className="px-5 py-2 rounded-xl border border-white/40 bg-black/30 text-white hover:bg-black/50 transition backdrop-blur-sm"
         >
-          Đặt chuyến khác
+          {t.buttons.startOver}
         </button>
       </div>
     </div>

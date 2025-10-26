@@ -195,7 +195,10 @@ export default function PilotsPage() {
                         
                         {/* Biệt danh và nút "Thông tin" trên cùng một dòng */}
                         <div className="mt-4 flex items-center justify-between">
-                          <p className="text-sm text-white/70">Biệt danh: {pilot.nickname}</p>
+<p className="text-sm text-white/70">
+  {t?.pilots?.nickname ?? "Biệt danh"}: {pilot.nickname}
+</p>
+
                           <Button variant="secondary" className="px-4 py-2 text-sm">
                             {buttonText}
                           </Button>
